@@ -31,15 +31,14 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING
   }, {
     hooks: {
-      beforeCreate: hashPassword,
-      beforeUpdate: hashPassword,
       beforeSave: hashPassword
     }
   })
 
   // assuming that the password is stored using bcrypt
-  // we can just compare what exists in the model with the user input
+  // we compare what exists in the model with the user input
   User.prototype.comparePassword = function (password) {
+    console.log(password, this.password)
     return bcrypt.compareAsync(password, this.password)
   }
   return User
